@@ -1,0 +1,40 @@
+{
+	"name": "alexmeyerson",
+	"version": "0.1.0",
+	"homepage": "https://github.com/ameyerson/alexmeyerson.com",
+	"author": {
+		"name": "Alex Meyerson",
+		"email": "alex.meyerson@gmail.com"
+	},
+	"main": "gruntfile.js",
+	"repository" : { 
+		"type" : "git",
+	  	"url" : "https://github.com/ameyerson/alexmeyerson.com.git"
+	},
+	"scripts": {
+	    "postinstall" : "grunt bower:install"
+	},
+	"dependencies": {
+		"bower": "",
+		"grunt": "~0.4.5",
+		"grunt-bower-install": "~1.0.0",
+		"grunt-bower-task": "~0.4.0",
+		"grunt-contrib-less": "~0.11.3",
+		"grunt-contrib-copy": "~0.4.1",
+		"grunt-banner": "~0.6.0",
+		"grunt-contrib-clean": "~0.5.0",
+		"grunt-contrib-concat": "~0.4.0",
+		"grunt-contrib-jshint": "~0.10.0",
+		"grunt-contrib-uglify": "~0.5.0",
+		"grunt-contrib-watch": "~0.5.2",
+		"grunt-modernizr": "^1.0.2",
+	    "grunt-newer": "~0.6.0",
+	    "grunt-rev": "~0.1.0",
+		"jshint-stylish": "~0.1.3"
+	},
+	"devDependencies": {
+		"grunt": "~0.4.5",
+		"grunt-contrib-csslint": "^2.0.0",
+		"load-grunt-tasks": "~0.2.0"
+	}
+}	
