@@ -1,1 +1,1 @@
-# grunt_config
+# gruntfile_config

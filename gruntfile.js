@@ -14,7 +14,6 @@ module.exports = function(grunt) {
 		    	'<%= pkg.author.name %>; Licensed MIT */',
 
 		config: {
-		   // Configurable paths
 		   app: 'app',
 		   dist: 'dist'
 		},
@@ -87,18 +86,8 @@ module.exports = function(grunt) {
 		                '{,*/}*.html',
 		                'styles/fonts/{,*/}*.*'
 		            ]
-		        }, {
-		            src: 'src/svg/timing.json',
-		            dest: '<%= config.app %>/svg/timing.json',
-		            flatten: true,
-		            filter: 'isFile'
-		        }, {
-		            src: 'src/svg/timing.json',
-		            dest: '<%= config.dist %>/svg/timing.json',
-		            flatten: true,
-		            filter: 'isFile'
 		        }]
-		    },
+		    }
 		},
 
 		//for build
@@ -107,13 +96,12 @@ module.exports = function(grunt) {
 		        files: [{
 		            dot: true,
 		            src: [
-		                '.tmp',
 		                '<%= config.dist %>/*',
-		                '!<%= config.dist %>/.git*'
+		                '!<%= config.dist %>/.git*',
+		                "!<%= config.dist %>/sftp-config.json"
 		            ]
 		        }]
-		    },
-		    server: '.tmp'
+		    }
 		},
 		uglify: {
 		    dist: {
@@ -136,6 +124,21 @@ module.exports = function(grunt) {
 		    uglify: true
 		},
 
+		useminPrepare: {
+		    options: {
+		        dest: '<%= config.dist %>'
+		    },
+		    html: '<%= config.app %>/index.html'
+		},
+
+		// Performs rewrites based on rev and the useminPrepare configuration
+		usemin: {
+		    options: {
+		        assetsDirs: ['<%= config.dist %>', '<%= config.dist %>/images']
+		    },
+		    html: ['<%= config.dist %>/{,*/}*.html'],
+		    css: ['<%= config.dist %>/styles/{,*/}*.css']
+		},
 
 		usebanner: {
 		    options: {
@@ -180,36 +183,37 @@ module.exports = function(grunt) {
 		       reporter: require('jshint-stylish')
 		   },
 		   all: [
-		       'source/{,*/}*.js'
+		   		'Gruntfile.js',
+		       	'source/{,*/}*.js'
 		   ]
 		},
 
         csslint: {
             lax: {
-                options: {
-                    "important": false,
-                    "adjoining-classes": false,
-                    "box-sizing": false,
-                    "order-alphabetical" : false,
-                    quiet: true
-                },
-                src: "<%= config.app %>/styles/main.css"
+                // options: {
+                //     "important": false,
+                //     "adjoining-classes": false,
+                //     "box-sizing": false,
+                //     "order-alphabetical" : false,
+                //     quiet: true
+                // },
+                // src: "<%= config.app %>/styles/main.css"
             },
 
             strict: {
                 options: {
-                    "order-alphabetical" : false,
-                    // "adjoining-classes": false,
+                    "order-alphabetical": false,
+                    "import": false,
                     // "box-sizing": false,
                     quiet: false
                 },
-                src: "<%= config.app %>/styles/main.css"
+                src: [
+            		'source/styles/{,*/}*.less',
+            		'!source/styles/libraries/{,*/}*.less'
+            	]
             }
         },
-
-
     });
-
 
     grunt.registerTask('test', [
     	'jshint',
@@ -221,11 +225,13 @@ module.exports = function(grunt) {
         'clean:dist',
         'concat:js',
         'less:dist',
+        'useminPrepare',
         // 'imagemin',
         'copy:dist',
         'modernizr',
         'uglify',
         'rev',
+        'usemin',
         'usebanner'
     ]);
 
@@ -239,3 +245,5 @@ module.exports = function(grunt) {
 		'build'
 	]);
 };
+
+//TODO: newer, test images, test modernizer
